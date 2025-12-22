@@ -45,7 +45,7 @@ const Navigation = () => {
                 isScrolled ? "text-foreground" : "text-primary-foreground"
               }`}
             >
-              Magnum 2026
+              TMICC Events 2026
             </span>
           </a>
 
