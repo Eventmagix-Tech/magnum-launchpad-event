@@ -9,14 +9,19 @@ const Footer = () => {
             © 2026 Magnum Launch Event. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-3 text-footer-foreground/60 text-sm">
+          <a 
+            href="https://verus.group/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 text-footer-foreground/60 text-sm hover:text-footer-foreground transition-colors"
+          >
             <span>Powered by</span>
             <img
               src={verusLogo}
               alt="Verus Group Logo"
-              className="h-8 object-contain brightness-0 invert opacity-80"
+              className="h-8 object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
             />
-          </div>
+          </a>
         </div>
       </div>
     </footer>
