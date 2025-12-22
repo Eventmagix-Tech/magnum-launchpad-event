@@ -1,13 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from "react-helmet-async";
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import AboutSection from "@/components/AboutSection";
+import ProgramSection from "@/components/ProgramSection";
+import LocationSection from "@/components/LocationSection";
+import MobileAppSection from "@/components/MobileAppSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>Magnum Launch Event 2026 | 12–14 January, Istanbul</title>
+        <meta
+          name="description"
+          content="Join us for the exclusive Magnum Launch Event 2026. Three days of innovation, brand experiences, and networking in Istanbul. 12–14 January 2026."
+        />
+        <meta
+          name="keywords"
+          content="Magnum, Launch Event, 2026, Istanbul, Ice Cream, TMICC, Brand Launch, Corporate Event"
+        />
+        <meta property="og:title" content="Magnum Launch Event 2026" />
+        <meta
+          property="og:description"
+          content="Experience innovation. Celebrate excellence. Shape the future. Join us 12–14 January 2026."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://magnum-launch-2026.com" />
+      </Helmet>
+
+      <main className="min-h-screen">
+        <Navigation />
+        <HeroSection />
+        <AboutSection />
+        <ProgramSection />
+        <LocationSection />
+        <MobileAppSection />
+        <Footer />
+      </main>
+    </>
   );
 };
 
