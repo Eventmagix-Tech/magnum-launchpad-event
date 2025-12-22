@@ -12,17 +12,17 @@ const LocationSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          {/* Map placeholder */}
+          {/* Map */}
           <div className="relative rounded-2xl overflow-hidden shadow-elegant aspect-[4/3]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.1234567890123!2d28.9783!3d41.0082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDAwJzI5LjUiTiAyOMKwNTgnNDEuOSJF!5e0!3m2!1sen!2str!4v1234567890123"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.8877!2d31.0569!3d36.8597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39a1f3a7b8b8d%3A0x8e6d4e9f1c8b8b8d!2sRegnum%20Carya%20Golf%20%26%20Spa%20Resort!5e0!3m2!1sen!2str!4v1703256000000!5m2!1sen!2str"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Event Location Map"
+              title="Regnum Carya Golf & Spa Resort Location"
               className="grayscale hover:grayscale-0 transition-all duration-500"
             />
           </div>
@@ -40,9 +40,20 @@ const LocationSection = () => {
                 <div>
                   <h3 className="font-display text-xl font-semibold text-foreground mb-2">Venue</h3>
                   <p className="text-muted-foreground">
-                    Premium Conference Center<br />
-                    Istanbul, Türkiye
+                    Regnum Carya Golf & Spa Resort<br />
+                    Belek, Antalya, Türkiye
                   </p>
+                  <a 
+                    href="https://www.regnumhotels.com/tr/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-primary hover:underline mt-2 text-sm font-medium"
+                  >
+                    Visit Hotel Website
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
@@ -68,14 +79,14 @@ const LocationSection = () => {
               <div className="flex items-start gap-5">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">Schedule</h3>
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">World-Class Venue</h3>
                   <p className="text-muted-foreground">
-                    Daily sessions from 09:00<br />
-                    Evening events until late
+                    Home of G20 Summit 2015<br />
+                    5-star luxury resort experience
                   </p>
                 </div>
               </div>
