@@ -41,7 +41,9 @@ const MobileAppSection = () => {
 
             {/* Google Play Button */}
             <a
-              href="#"
+              href="https://play.google.com/store/apps/details?id=us.ver.magnumevents"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-3 bg-foreground text-background px-6 py-4 rounded-xl hover:bg-foreground/90 transition-all duration-300 hover:scale-105 hover:shadow-elegant min-w-[200px]"
               aria-label="Get it on Google Play"
             >
