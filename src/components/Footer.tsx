@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="section-container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-footer-foreground/60 text-sm">
-            © 2026 Magnum Launch Event. All rights reserved.
+            © 2026 Magnum Launch Event.
           </div>
 
           <a 
