@@ -12,3 +12,12 @@ export interface BlogPost {
   image_url: string | null;
   created_at: string;
 }
+
+export interface EventSchedule {
+  id: string;
+  event_date: string;
+  time_range: string;
+  title: string;
+  speaker: string | null;
+  is_break: boolean;
+}
