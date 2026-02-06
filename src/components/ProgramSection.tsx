@@ -13,7 +13,7 @@ const ProgramSection = () => {
       try {
         const { data, error } = await supabase
           .from("event_schedule")
-          .select("id, event_date, time_range, title, speaker, is_break")
+          .select("*")
           .order("time_range", { ascending: true });
 
         if (error) throw error;
