@@ -1,26 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type SessionType = "plenary" | "syis" | "society" | "scientific" | "workshop" | "social";
-
-interface ProgramItem {
-  time: string;
-  title: string;
-  description?: string;
-  type: SessionType;
-  hall?: string;
-}
-
-interface DaySchedule {
-  date: string;
-  dateLabel: string;
-  halls: string[];
-  items: ProgramItem[];
-}
 
 const sessionTypeColors: Record<SessionType, string> = {
   plenary: "bg-primary text-primary-foreground",
@@ -40,51 +27,67 @@ const sessionTypeLabels: Record<SessionType, string> = {
   social: "Social",
 };
 
-const programData: DaySchedule[] = [
-  {
-    date: "sunday",
-    dateLabel: "Sunday, January 12, 2026",
-    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
-    items: [],
-  },
-  {
-    date: "monday",
-    dateLabel: "Monday, January 13, 2026",
-    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
-    items: [],
-  },
-  {
-    date: "tuesday",
-    dateLabel: "Tuesday, January 14, 2026",
-    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
-    items: [],
-  },
+interface ScheduleRow {
+  id: string;
+  event_date: string | null;
+  time_range: string | null;
+  title: string | null;
+  description: string | null;
+  hall: string | null;
+  session_type: string | null;
+  speaker: string | null;
+}
+
+const dayConfigs = [
+  { date: "Sunday, January 12, 2026", label: "Sunday, January 12, 2026" },
+  { date: "Monday, January 13, 2026", label: "Monday, January 13, 2026" },
+  { date: "Tuesday, January 14, 2026", label: "Tuesday, January 14, 2026" },
+];
+
+const defaultHalls = [
+  "Hall 1: Artificial Intelligence",
+  "Hall 2: Imaging",
+  "Hall 3: Invasive Treatments",
+  "Hall 4: Junior Track",
+  "Hall 5: Failing Hearts",
+  "Hall 6: Care in Pediatric Cardiology",
+  "Hall 7: Flash Talks Room",
+  "Hall 8 / Belvedere Room: Oral Abstract Sessions",
 ];
 
 const Program = () => {
-  const [activeDay, setActiveDay] = useState(programData[0].date);
-  const [activeHall, setActiveHall] = useState(programData[0].halls[0]);
+  const [activeDay, setActiveDay] = useState(dayConfigs[0].date);
+  const [activeHall, setActiveHall] = useState(defaultHalls[0]);
+  const [events, setEvents] = useState<ScheduleRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const currentDay = programData.find((d) => d.date === activeDay) ?? programData[0];
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await supabase
+        .from("event_schedule")
+        .select("*")
+        .in("event_date", dayConfigs.map((d) => d.date))
+        .order("time_range", { ascending: true });
+      setEvents(data ?? []);
+      setLoading(false);
+    };
+    fetch();
+  }, []);
 
-  const filteredItems = currentDay.items.filter(
-    (item) => !item.hall || item.hall === activeHall
+  const filteredItems = events.filter(
+    (e) => e.event_date === activeDay && e.hall === activeHall
   );
 
   const handleDayChange = (day: string) => {
     setActiveDay(day);
-    const newDay = programData.find((d) => d.date === day);
-    if (newDay) setActiveHall(newDay.halls[0]);
+    setActiveHall(defaultHalls[0]);
   };
 
   return (
     <>
       <Helmet>
         <title>Program | Magnum Launch Event 2026</title>
-        <meta
-          name="description"
-          content="View the full conference program for Magnum Launch Event 2026. Sessions, workshops, and networking across three days."
-        />
+        <meta name="description" content="View the full conference program for Magnum Launch Event 2026." />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
@@ -109,10 +112,7 @@ const Program = () => {
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-bold text-foreground text-sm">Legend:</span>
                 {(Object.keys(sessionTypeColors) as SessionType[]).map((type) => (
-                  <span
-                    key={type}
-                    className={cn("px-3 py-1 rounded text-sm font-medium", sessionTypeColors[type])}
-                  >
+                  <span key={type} className={cn("px-3 py-1 rounded text-sm font-medium", sessionTypeColors[type])}>
                     {sessionTypeLabels[type]}
                   </span>
                 ))}
@@ -125,7 +125,7 @@ const Program = () => {
             <div className="section-container">
               <Tabs value={activeDay} onValueChange={handleDayChange}>
                 <TabsList className="bg-transparent h-auto flex flex-wrap justify-center gap-3 mb-10">
-                  {programData.map((day) => (
+                  {dayConfigs.map((day) => (
                     <TabsTrigger
                       key={day.date}
                       value={day.date}
@@ -133,16 +133,16 @@ const Program = () => {
                         "px-4 py-3 rounded-lg text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=inactive]:bg-muted/50 data-[state=inactive]:text-primary data-[state=inactive]:hover:bg-accent/20"
                       )}
                     >
-                      {day.dateLabel}
+                      {day.label}
                     </TabsTrigger>
                   ))}
                 </TabsList>
 
-                {programData.map((day) => (
+                {dayConfigs.map((day) => (
                   <TabsContent key={day.date} value={day.date}>
                     {/* Hall Sub-Navigation */}
                     <div className="flex flex-wrap justify-center gap-3 mb-8">
-                      {day.halls.map((hall) => (
+                      {defaultHalls.map((hall) => (
                         <button
                           key={hall}
                           onClick={() => setActiveHall(hall)}
@@ -160,41 +160,45 @@ const Program = () => {
 
                     {/* Cards or Placeholder */}
                     <div className="max-w-4xl mx-auto">
-                      {filteredItems.length > 0 ? (
+                      {loading ? (
                         <div className="space-y-4">
-                          {filteredItems.map((item, idx) => (
-                            <div
-                              key={idx}
-                              className={cn(
-                                "rounded-xl p-5 shadow-md border border-accent/10 hover:shadow-lg transition-shadow",
-                                sessionTypeColors[item.type]
-                              )}
-                            >
-                              <div className="flex flex-col md:flex-row gap-3">
-                                <span className="font-semibold whitespace-nowrap min-w-[160px]">
-                                  {item.time}
-                                </span>
-                                <div className="flex-1">
-                                  <p className="font-bold text-lg">{item.title}</p>
-                                  {item.description && (
-                                    <p className="opacity-90 text-sm mt-1">{item.description}</p>
-                                  )}
-                                  {item.hall && (
-                                    <p className="text-xs opacity-75 mt-1">📍 {item.hall}</p>
-                                  )}
+                          {Array.from({ length: 4 }).map((_, i) => (
+                            <Skeleton key={i} className="h-24 w-full rounded-xl" />
+                          ))}
+                        </div>
+                      ) : filteredItems.length > 0 ? (
+                        <div className="space-y-4">
+                          {filteredItems.map((item) => {
+                            const type = (item.session_type as SessionType) || "scientific";
+                            return (
+                              <div
+                                key={item.id}
+                                className={cn(
+                                  "rounded-xl p-5 shadow-md border border-accent/10 hover:shadow-lg transition-shadow",
+                                  sessionTypeColors[type] || sessionTypeColors.scientific
+                                )}
+                              >
+                                <div className="flex flex-col md:flex-row gap-3">
+                                  <span className="font-semibold whitespace-nowrap min-w-[160px]">
+                                    {item.time_range}
+                                  </span>
+                                  <div className="flex-1">
+                                    <p className="font-bold text-lg">{item.title}</p>
+                                    {item.description && (
+                                      <p className="opacity-90 text-sm mt-1 whitespace-pre-line">{item.description}</p>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       ) : (
                         <div className="p-12 bg-muted/30 rounded-xl border border-accent/20 text-center">
                           <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                            {day.dateLabel} — {activeHall}
+                            {day.label} — {activeHall}
                           </h3>
-                          <p className="text-muted-foreground italic">
-                            To be announced soon...
-                          </p>
+                          <p className="text-muted-foreground italic">To be announced soon...</p>
                         </div>
                       )}
                     </div>
@@ -202,7 +206,6 @@ const Program = () => {
                 ))}
               </Tabs>
 
-              {/* Footer Note */}
               <p className="text-center text-muted-foreground text-sm mt-12">
                 The detailed scientific program with all session information will be available closer to the conference date.
               </p>
