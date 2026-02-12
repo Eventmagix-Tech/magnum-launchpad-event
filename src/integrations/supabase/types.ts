@@ -41,24 +41,33 @@ export type Database = {
       event_schedule: {
         Row: {
           created_at: string
+          description: string | null
           event_date: string | null
+          hall: string | null
           id: string
+          session_type: string | null
           speaker: string | null
           time_range: string | null
           title: string | null
         }
         Insert: {
           created_at: string
+          description?: string | null
           event_date?: string | null
+          hall?: string | null
           id?: string
+          session_type?: string | null
           speaker?: string | null
           time_range?: string | null
           title?: string | null
         }
         Update: {
           created_at?: string
+          description?: string | null
           event_date?: string | null
+          hall?: string | null
           id?: string
+          session_type?: string | null
           speaker?: string | null
           time_range?: string | null
           title?: string | null
