@@ -44,19 +44,19 @@ const programData: DaySchedule[] = [
   {
     date: "sunday",
     dateLabel: "Sunday, January 12, 2026",
-    halls: ["HALL A", "HALL B", "HALL C"],
+    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
     items: [],
   },
   {
     date: "monday",
     dateLabel: "Monday, January 13, 2026",
-    halls: ["HALL A", "HALL B", "HALL C"],
+    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
     items: [],
   },
   {
     date: "tuesday",
     dateLabel: "Tuesday, January 14, 2026",
-    halls: ["HALL A", "HALL B"],
+    halls: ["Hall 1: Artificial Intelligence", "Hall 2: Imaging", "Hall 3: Invasive Treatments", "Hall 4: Junior Track", "Hall 5: Failing Hearts", "Hall 6: Care in Pediatric Cardiology", "Hall 7: Flash Talks Room", "Hall 8 / Belvedere Room: Oral Abstract Sessions"],
     items: [],
   },
 ];
